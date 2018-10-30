@@ -60,7 +60,66 @@ Y_pred = (Y_pred > 0.5)
 
 # Confusion matrix
 from sklearn.metrics import confusion_matrix
-cm = confusion_matrix(Y_tesy, Y_pred)
+cm = confusion_matrix(Y_test, Y_pred)
+
+
+if __name__ == '__main__' :
+    
+    from keras.wrappers.scikit_learn import KerasClassifier
+    from sklearn.model_selection import cross_val_score
+    from keras.models import Sequential
+    from keras.layers import Dense
+    
+    def buildModel():
+        classifier = Sequential()
+        classifier.add(Dense(init ="uniform", activation="relu", input_dim=11, output_dim=6))
+        classifier.add(Dense(init="uniform", activation="relu", output_dim=6))
+        classifier.add(Dense(init="uniform", activation="sigmoid", output_dim=1))
+        classifier.compile(optimizer='adam', loss= 'binary_crossentropy', metrics=['accuracy'])
+        return classifier
+    
+    classifier = KerasClassifier(build_fn = buildModel, batch_size = 100, epochs = 1)
+    accuracies = cross_val_score(estimator = classifier, X = X_train, y = Y_train, cv=10, n_jobs= -1 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
